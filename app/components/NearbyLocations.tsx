@@ -8,6 +8,9 @@ declare global {
   interface Window {
     ymaps: any;
   }
+
+  // Extend global scope with Yandex map instance type
+  type YandexMap = any; // You can replace this with a custom type if you want better intellisense
 }
 
 type LocationCategory = 'education' | 'shopping' | 'hospital' | 'market';
@@ -18,7 +21,6 @@ type Location = {
   coords: [number, number];
   category: LocationCategory;
 };
-
 
 const locations: Location[] = [
   {
@@ -124,6 +126,7 @@ const locations: Location[] = [
     category: 'market',
   },
 ];
+
 const categoryIcons: Record<string, string> = {
   all: '/all-pin.png',
   education: '/scool.png',
@@ -134,7 +137,7 @@ const categoryIcons: Record<string, string> = {
 
 export default function NearbyMap() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const mapRef = useRef<null | any>(null);
+  const mapRef = useRef<YandexMap | null>(null);
 
   useEffect(() => {
     const loadMap = () => {
@@ -226,38 +229,28 @@ export default function NearbyMap() {
         className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 mb-6"
       >
         <div className="w-12 h-12">
-          <Image
-            src="/pin.png"
-            alt="Lokasyon İkonu"
-            width={48}
-            height={48}
-            className="w-full h-full object-contain"
-          />
+          <Image src="/pin.png" alt="Lokasyon İkonu" width={48} height={48} />
         </div>
         <div className="text-center md:text-left w-full">
-          <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-            Projeye Yakın Lokasyonlar
-          </h2>
+          <h2 className="text-4xl font-extrabold text-gray-900">Projeye Yakın Lokasyonlar</h2>
           <p className="mt-4 text-gray-600 text-base max-w-xl">
             CRITER Bağlıca’ya yakın önemli noktalar ve mesafeleri aşağıdan inceleyebilirsiniz.
           </p>
         </div>
       </motion.div>
 
-      {/* Category Buttons */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.4 }}
         transition={{ duration: 0.9 }}
-        className="max-w-6xl mx-auto w-full mb-10"
+        className="max-w-6xl mx-auto mb-10"
       >
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
           {buttonData.map((cat) => (
             <button
               key={cat.key}
               onClick={() => setSelectedCategory(cat.key)}
-              className={`flex items-center gap-2 px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`flex items-center gap-2 px-5 py-1.5 rounded-full text-sm font-medium transition ${
                 selectedCategory === cat.key
                   ? 'bg-black text-white'
                   : 'bg-white text-gray-800'
@@ -270,11 +263,9 @@ export default function NearbyMap() {
         </div>
       </motion.div>
 
-      {/* Map Container */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 1 }}
         className="w-full h-[500px] rounded-2xl shadow-2xl overflow-hidden border border-gray-200"
         id="map"
