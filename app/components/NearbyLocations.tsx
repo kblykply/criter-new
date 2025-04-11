@@ -1,4 +1,3 @@
-// NearbyMap.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -7,12 +6,8 @@ import { motion } from 'framer-motion';
 
 declare global {
   interface Window {
-    ymaps: any;
+    ymaps: typeof import('yandex-maps');
   }
-
-  type YandexMap = {
-    geoObjects: any;
-  };
 }
 
 type LocationCategory = 'education' | 'shopping' | 'hospital' | 'market';
@@ -24,111 +19,26 @@ type Location = {
   category: LocationCategory;
 };
 
-// Location list and icons
 const locations: Location[] = [
-  {
-    name: 'CADDE YUNUS AVM',
-    description: '5.7 km – 8 dk',
-    coords: [39.84251, 32.54523],
-    category: 'shopping',
-  },
-  {
-    name: 'Emporia Avm',
-    description: '6.1 km – 9 dk',
-    coords: [39.84171, 32.53998],
-    category: 'shopping',
-  },
-  {
-    name: 'Arsia Avm',
-    description: '5.1 km – 7 dk',
-    coords: [39.88359, 32.65527],
-    category: 'shopping',
-  },
-  {
-    name: 'Elya Center Alışveriş Merkezi',
-    description: '4.7 km – 7 dk',
-    coords: [39.87547, 32.65182],
-    category: 'shopping',
-  },
-  {
-    name: 'Çankaya Üniversitesi Mühendislik Fakültesi',
-    description: '6.9 km – 10 dk',
-    coords: [39.81905, 32.56371],
-    category: 'education',
-  },
-  {
-    name: 'Başkent Üniversitesi',
-    description: '5.1 km – 7 dk',
-    coords: [39.88761, 32.65434],
-    category: 'education',
-  },
-  {
-    name: 'Hacettepe Üniversitesi Beytepe Yerleşkesi',
-    description: '11.9 km – 17 dk',
-    coords: [39.86781, 32.73496],
-    category: 'education',
-  },
-  {
-    name: 'Orta Doğu Teknik Üniversitesi',
-    description: '15.8 km – 23 dk',
-    coords: [39.88949, 32.77994],
-    category: 'education',
-  },
-  {
-    name: 'Medisun Hastanesi',
-    description: '9.9 km – 14 dk',
-    coords: [39.89054, 32.71027],
-    category: 'hospital',
-  },
-  {
-    name: 'Medical Park Ankara İncek Hastanesi',
-    description: '12.4 km – 18 dk',
-    coords: [39.82877, 32.72859],
-    category: 'hospital',
-  },
-  {
-    name: 'Özel Bilgi Hastanesi',
-    description: '13.1 km – 19 dk',
-    coords: [39.94999, 32.71588],
-    category: 'hospital',
-  },
-  {
-    name: 'Medical Park Ankara Hastanesi',
-    description: '14.0 km – 20 dk',
-    coords: [39.96636, 32.70989],
-    category: 'hospital',
-  },
-  {
-    name: 'Özgür Market',
-    description: '4.5 km – 6 dk',
-    coords: [39.86564, 32.64807],
-    category: 'market',
-  },
-  {
-    name: 'Marka Market',
-    description: '5.1 km – 7 dk',
-    coords: [39.86299, 32.65379],
-    category: 'market',
-  },
-  {
-    name: 'Şok Market',
-    description: '2.3 km – 3 dk',
-    coords: [39.88696, 32.61888],
-    category: 'market',
-  },
-  {
-    name: 'Tarım Kredi Kooperatif Market',
-    description: '3.2 km – 4 dk',
-    coords: [39.89189, 32.62718],
-    category: 'market',
-  },
-  {
-    name: 'Migros',
-    description: '6.1 km – 9 dk',
-    coords: [39.84132, 32.54005],
-    category: 'market',
-  },
+  { name: 'CADDE YUNUS AVM', description: '5.7 km – 8 dk', coords: [39.84251, 32.54523], category: 'shopping' },
+  { name: 'Emporia Avm', description: '6.1 km – 9 dk', coords: [39.84171, 32.53998], category: 'shopping' },
+  { name: 'Arsia Avm', description: '5.1 km – 7 dk', coords: [39.88359, 32.65527], category: 'shopping' },
+  { name: 'Elya Center Alışveriş Merkezi', description: '4.7 km – 7 dk', coords: [39.87547, 32.65182], category: 'shopping' },
+  { name: 'Çankaya Üniversitesi Mühendislik Fakültesi', description: '6.9 km – 10 dk', coords: [39.81905, 32.56371], category: 'education' },
+  { name: 'Başkent Üniversitesi', description: '5.1 km – 7 dk', coords: [39.88761, 32.65434], category: 'education' },
+  { name: 'Hacettepe Üniversitesi Beytepe Yerleşkesi', description: '11.9 km – 17 dk', coords: [39.86781, 32.73496], category: 'education' },
+  { name: 'Orta Doğu Teknik Üniversitesi', description: '15.8 km – 23 dk', coords: [39.88949, 32.77994], category: 'education' },
+  { name: 'Medisun Hastanesi', description: '9.9 km – 14 dk', coords: [39.89054, 32.71027], category: 'hospital' },
+  { name: 'Medical Park Ankara İncek Hastanesi', description: '12.4 km – 18 dk', coords: [39.82877, 32.72859], category: 'hospital' },
+  { name: 'Özel Bilgi Hastanesi', description: '13.1 km – 19 dk', coords: [39.94999, 32.71588], category: 'hospital' },
+  { name: 'Medical Park Ankara Hastanesi', description: '14.0 km – 20 dk', coords: [39.96636, 32.70989], category: 'hospital' },
+  { name: 'Özgür Market', description: '4.5 km – 6 dk', coords: [39.86564, 32.64807], category: 'market' },
+  { name: 'Marka Market', description: '5.1 km – 7 dk', coords: [39.86299, 32.65379], category: 'market' },
+  { name: 'Şok Market', description: '2.3 km – 3 dk', coords: [39.88696, 32.61888], category: 'market' },
+  { name: 'Tarım Kredi Kooperatif Market', description: '3.2 km – 4 dk', coords: [39.89189, 32.62718], category: 'market' },
+  { name: 'Migros', description: '6.1 km – 9 dk', coords: [39.84132, 32.54005], category: 'market' },
 ];
+
 const categoryIcons: Record<string, string> = {
   all: '/all-pin.png',
   education: '/scool.png',
@@ -139,7 +49,7 @@ const categoryIcons: Record<string, string> = {
 
 export default function NearbyMap() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const mapRef = useRef<null | YandexMap>(null);
+  const mapRef = useRef<ymaps.Map | null>(null);
 
   useEffect(() => {
     const loadMap = () => {
@@ -150,44 +60,41 @@ export default function NearbyMap() {
         const script = document.createElement('script');
         script.src = 'https://api-maps.yandex.ru/2.1/?lang=tr_TR';
         script.type = 'text/javascript';
-        script.onload = () => {
-          if (window.ymaps) window.ymaps.ready(initMap);
-        };
+        script.onload = () => window.ymaps?.ready(initMap);
         document.head.appendChild(script);
       } else {
         if (window.ymaps) {
           window.ymaps.ready(initMap);
         } else {
-          existingScript.addEventListener('load', () => {
-            if (window.ymaps) window.ymaps.ready(initMap);
-          });
+          existingScript.addEventListener('load', () => window.ymaps?.ready(initMap));
         }
       }
     };
 
     const initMap = () => {
-      const ymaps = window.ymaps;
       if (!mapRef.current) {
-        mapRef.current = new ymaps.Map('map', {
+        mapRef.current = new window.ymaps.Map('map', {
           center: [39.875507, 32.596579],
           zoom: 12,
           controls: ['zoomControl'],
         });
       }
 
-      if (!mapRef.current) return;
       mapRef.current.geoObjects.removeAll();
 
-      const projectPlacemark = new ymaps.Placemark(
+      const projectPlacemark = new window.ymaps.Placemark(
         [39.875507, 32.596579],
-        { balloonContent: '<strong>CRITER Bağlıca</strong><br/>Proje Konumu' },
+        {
+          balloonContent: '<strong>CRITER Bağlıca</strong><br/>Proje Konumu',
+        },
         { preset: 'islands#blueHomeCircleIcon' }
       );
+
       mapRef.current.geoObjects.add(projectPlacemark);
 
       locations.forEach((place) => {
         if (selectedCategory === 'all' || selectedCategory === place.category) {
-          const pin = new ymaps.Placemark(
+          const pin = new window.ymaps.Placemark(
             place.coords,
             {
               balloonContent: `<strong>${place.name}</strong><br/>${place.description}`,
