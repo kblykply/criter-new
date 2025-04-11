@@ -4,11 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-declare global {
-  interface Window {
-    ymaps: typeof import('yandex-maps');
-  }
-}
+
 
 type LocationCategory = 'education' | 'shopping' | 'hospital' | 'market';
 
