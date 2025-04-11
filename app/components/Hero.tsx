@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import type { Swiper as SwiperType } from 'swiper/types';
+import type { NavigationOptions } from 'swiper/types';
 
 export default function Hero() {
   const slides = [
@@ -28,17 +30,20 @@ export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
 
   useEffect(() => {
     if (
       swiperInstance &&
       prevRef.current &&
       nextRef.current &&
-      swiperInstance.params.navigation
+      swiperInstance.params.navigation &&
+      typeof swiperInstance.params.navigation === 'object'
     ) {
-      swiperInstance.params.navigation.prevEl = prevRef.current;
-      swiperInstance.params.navigation.nextEl = nextRef.current;
+      const navigation = swiperInstance.params.navigation as NavigationOptions;
+      navigation.prevEl = prevRef.current;
+      navigation.nextEl = nextRef.current;
+
       swiperInstance.navigation.destroy();
       swiperInstance.navigation.init();
       swiperInstance.navigation.update();
@@ -54,7 +59,7 @@ export default function Hero() {
         loop
         navigation={false}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-        onSwiper={setSwiperInstance}
+        onSwiper={(swiper) => setSwiperInstance(swiper)}
         className="h-full w-full"
       >
         {slides.map((slide, index) => (
@@ -71,6 +76,7 @@ export default function Hero() {
         ))}
       </Swiper>
 
+      {/* Navigation Arrows */}
       <div
         ref={prevRef}
         className="absolute top-1/2 left-4 -translate-y-1/2 z-30 text-white text-4xl cursor-pointer hidden md:block select-none"
@@ -84,6 +90,7 @@ export default function Hero() {
         ›
       </div>
 
+      {/* Content Overlay */}
       <div className="absolute inset-0 z-20 flex flex-col-reverse md:flex-row justify-between items-end md:items-end px-6 md:px-16 py-10">
         <AnimatePresence mode="wait">
           <motion.div
@@ -111,6 +118,7 @@ export default function Hero() {
           </motion.div>
         </AnimatePresence>
 
+        {/* Side Cards */}
         <AnimatePresence mode="wait">
           <motion.div
             key={`cards-${activeIndex}`}
@@ -120,59 +128,58 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
             className="hidden md:flex flex-col gap-4 w-[280px] pr-2 mb-10"
           >
-            {/* Top Card */}
+            {/* Card 1 */}
             <div className="relative h-[370px] w-full bg-white rounded-[8px] shadow-md overflow-visible">
               <div className="px-4 pt-4 pb-2 relative z-10">
                 <h3 className="text-l font-semibold text-black leading-tight">
                   Aileler İçin En Güzel Yaşam Alanı
                 </h3>
                 <p className="text-xs text-gray-500 font-normal mt-1">
-                    
-                    CRITER Rezidans, ailenizle birlikte huzurlu bir yaşam sunuyor.
+                  CRITER Rezidans, ailenizle birlikte huzurlu bir yaşam sunuyor.
                 </p>
               </div>
-                  <div className="absolute bottom-0 left-0 w-[115%] h-[400px] z-50 translate-x-[-12%]">
-      <Image
-        src="/family.png"
-        alt="Aile"
-        fill
-        className="object-contain object-bottom"
-      />
-    </div>
+              <div className="absolute bottom-0 left-0 w-[115%] h-[400px] z-50 translate-x-[-12%]">
+                <Image
+                  src="/family.png"
+                  alt="Aile"
+                  fill
+                  className="object-contain object-bottom"
+                />
+              </div>
             </div>
 
-          {/* Bottom Card */}
-<div className="relative w-full rounded-[10px] overflow-visible">
-  <div className="relative h-[170px] w-full bg-white rounded-[10px] shadow-md overflow-visible">
-    <Image
-      src="/mother.png"
-      alt="Anne"
-      fill
-      className="object-cover object-right rounded-[10px]"
-    />
-    <div className="absolute top-4 left-4 z-30">
-      <h3 className="text-sm font-semibold text-black itedrop-shadow">
-Annelerimize En  Güzel Hediye
+            {/* Card 2 */}
+            <div className="relative w-full rounded-[10px] overflow-visible">
+              <div className="relative h-[170px] w-full bg-white rounded-[10px] shadow-md overflow-visible">
+                <Image
+                  src="/mother.png"
+                  alt="Anne"
+                  fill
+                  className="object-cover object-right rounded-[10px]"
+                />
+                <div className="absolute top-4 left-4 z-30">
+                  <h3 className="text-sm font-semibold text-black">
+                    Annelerimize En Güzel Hediye
+                  </h3>
+                  <p className="text-xs text-gray-500 font-normal mt-1">
+                    Bilgi Almak İçin Ara
+                  </p>
+                </div>
+              </div>
 
-      </h3>
-      <p className="text-xs text-gray-500 font-normal mt-1">
-                 Bilgi Almak İçin Ara
-                </p>  
-    </div>
-  </div>
+              {/* Ribbon */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-50">
+                <Image
+                  src="/mothers day.png"
+                  alt="Mother's Day"
+                  width={160}
+                  height={50}
+                  className="object-contain"
+                />
+              </div>
+            </div>
 
-  {/* Pink Mother's Day Ribbon */}
-  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-50">
-    <Image
-      src="/mothers day.png"
-      alt="Mother's Day"
-      width={160}
-      height={50}
-      className="object-contain"
-    />
-  </div>
-</div>
-
+            {/* CTA Button */}
             <button className="bg-white text-gray-600 hover:text-white hover:bg-gray-800 px-4 py-2 rounded-full text-sm font-medium shadow transition flex items-center justify-center gap-1">
               Ayrıntılı Bilgi İçin Arayın <span className="text-lg">＋</span>
             </button>

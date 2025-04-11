@@ -44,7 +44,7 @@ export default function SocialMediaSection() {
         </p>
 
         <div className="flex flex-wrap justify-center gap-6">
-          {socials.map((social, i) => (
+          {socials.map((social) => (
             <motion.a
               key={social.name}
               href={social.url}

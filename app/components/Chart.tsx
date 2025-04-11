@@ -47,7 +47,7 @@ const colors = {
 };
 
 export default function InvestmentCharts() {
-  const [activeTab, setActiveTab] = useState<'Birim Fiyat' | 'Fiyat' | 'Amortisman' | 'Fiyat Endeksi'>('Birim Fiyat');
+  const [activeTab, setActiveTab] = useState<keyof typeof datasets>('Birim Fiyat');
 
   const chartData = {
     labels,
@@ -79,9 +79,11 @@ export default function InvestmentCharts() {
         {Object.keys(datasets).map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab as any)}
+            onClick={() => setActiveTab(tab as keyof typeof datasets)}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-              activeTab === tab ? 'bg-gradient-to-r from-[#5DA5F1] to-[#3A78D4] text-white shadow-lg' : 'bg-gray-100 text-gray-700'
+              activeTab === tab
+                ? 'bg-gradient-to-r from-[#5DA5F1] to-[#3A78D4] text-white shadow-lg'
+                : 'bg-gray-100 text-gray-700'
             }`}
           >
             {tab}
@@ -91,10 +93,27 @@ export default function InvestmentCharts() {
 
       {/* Chart */}
       <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-lg max-w-6xl mx-auto">
-        <Line data={chartData} options={{ responsive: true, plugins: { legend: { display: false } } }} />
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: { mode: 'index' },
+            },
+            scales: {
+              x: {
+                ticks: { color: '#4B5563' },
+              },
+              y: {
+                ticks: { color: '#4B5563' },
+              },
+            },
+          }}
+        />
       </div>
 
-      {/* Placeholder for additional icons/designs */}
+      {/* Placeholder for icons / visuals */}
       <div className="mt-12 flex justify-center gap-10 opacity-40">
         <Image src="/investment-icon-1.png" alt="placeholder" width={60} height={60} />
         <Image src="/investment-icon-2.png" alt="placeholder" width={60} height={60} />

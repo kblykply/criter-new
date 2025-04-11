@@ -5,15 +5,7 @@ import Chart from '../components/Chart'; // adjust path if needed
 import OtherDatas from '../components/OtherDatas'; // adjust path if needed
 import BaglicaMapSection from '../components/BaglicaMapSection';
 
-
-
-
-import { Unbounded } from 'next/font/google';
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-}); 
+ 
 export default function CriterHakkindaPage() {
   return (
     <main className="min-h-screen">

@@ -9,7 +9,7 @@ export default function MissionVisionSection() {
       {/* Filigran - Top Left */}
       <div className="absolute top-0 left-0 w-1/2 h-full opacity-10 z-0 pointer-events-none select-none">
         <Image
-          src="/criter-logo.webp" // Replace with your filigran image
+          src="/criter-logo.webp"
           alt="Filigran"
           fill
           className="object-contain"
@@ -26,7 +26,7 @@ export default function MissionVisionSection() {
         >
           <div className="relative w-full h-96 md:h-[500px] rounded-xl overflow-hidden shadow-md">
             <Image
-              src="/3.png" // Replace with your own image
+              src="/3.png"
               alt="Mission Vision"
               fill
               className="object-cover"
@@ -54,7 +54,7 @@ export default function MissionVisionSection() {
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 mb-2">Vizyonumuz</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Türkiye'nin önde gelen inşaat markalarından biri olmak ve geleceği şekillendiren projelere imza atmak.
+              Türkiye’nin önde gelen inşaat markalarından biri olmak ve geleceği şekillendiren projelere imza atmak.
             </p>
           </div>
         </motion.div>

@@ -2,7 +2,14 @@
 
 import Image from 'next/image';
 
-const gallery = [
+type GalleryItem = {
+  src: string;
+  title: string;
+  col: string;
+  row: string;
+};
+
+const gallery: GalleryItem[] = [
   { src: '/doga.png', title: 'Doğayla İç İçe Mimari', col: 'col-span-2', row: 'row-span-1' },
   { src: '/yatirim.png', title: 'Yatırımcıya Uygun Karma Proje', col: 'col-span-2', row: 'row-span-2' },
   { src: '/aile.png', title: 'Aileler İçin Güvenli Çevre', col: 'col-span-2', row: 'row-span-3' },
@@ -50,7 +57,7 @@ export default function GallerySection() {
   );
 }
 
-function GalleryCard({ img }: { img: any }) {
+function GalleryCard({ img }: { img: GalleryItem }) {
   return (
     <div
       className={`relative rounded-xl overflow-hidden bg-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 group ${img.col} ${img.row}`}

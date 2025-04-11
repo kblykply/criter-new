@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 declare global {
   interface Window {
@@ -10,7 +10,16 @@ declare global {
   }
 }
 
-const locations = [
+type LocationCategory = 'education' | 'shopping' | 'hospital' | 'market';
+
+type Location = {
+  name: string;
+  description: string;
+  coords: [number, number];
+  category: LocationCategory;
+};
+
+const locations: Location[] = [
   {
     name: 'CADDE YUNUS AVM',
     description: '5.7 km – 8 dk',
@@ -115,7 +124,6 @@ const locations = [
   },
 ];
 
-
 const categoryIcons: Record<string, string> = {
   all: '/all-pin.png',
   education: '/scool.png',
@@ -125,15 +133,14 @@ const categoryIcons: Record<string, string> = {
 };
 
 export default function NearbyMap() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const mapRef = useRef<any>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const mapRef = useRef<null | any>(null);
 
   useEffect(() => {
     const loadMap = () => {
       if (typeof window === 'undefined') return;
-    
+
       const existingScript = document.querySelector('script[src*="api-maps.yandex"]');
-    
       if (!existingScript) {
         const script = document.createElement('script');
         script.src = 'https://api-maps.yandex.ru/2.1/?lang=tr_TR';
@@ -156,46 +163,45 @@ export default function NearbyMap() {
         }
       }
     };
+
     const initMap = () => {
-      window.ymaps.ready(() => {
-        if (!mapRef.current) {
-          mapRef.current = new window.ymaps.Map('map', {
-            center: [39.875507, 32.596579],
-            zoom: 12  ,
-            controls: ['zoomControl'],
-          });
-        }
-
-        mapRef.current.geoObjects.removeAll();
-
-        const projectPlacemark = new window.ymaps.Placemark(
-          [39.875507, 32.596579],
-          {
-            balloonContent: `<strong>CRITER Bağlıca</strong><br/>Proje Konumu`,
-          },
-          {
-            preset: 'islands#blueHomeCircleIcon',
-          }
-        );
-        mapRef.current.geoObjects.add(projectPlacemark);
-
-        locations.forEach((place) => {
-          if (selectedCategory === 'all' || selectedCategory === place.category) {
-            const pin = new window.ymaps.Placemark(
-              place.coords,
-              {
-                balloonContent: `<strong>${place.name}</strong><br/>${place.description}`,
-              },
-              {
-                iconLayout: 'default#image',
-                iconImageHref: categoryIcons[place.category],
-                iconImageSize: [42, 42],
-                iconImageOffset: [-21, -21],
-              }
-            );
-            mapRef.current.geoObjects.add(pin);
-          }
+      if (!mapRef.current) {
+        mapRef.current = new window.ymaps.Map('map', {
+          center: [39.875507, 32.596579],
+          zoom: 12,
+          controls: ['zoomControl'],
         });
+      }
+
+      mapRef.current.geoObjects.removeAll();
+
+      const projectPlacemark = new window.ymaps.Placemark(
+        [39.875507, 32.596579],
+        {
+          balloonContent: `<strong>CRITER Bağlıca</strong><br/>Proje Konumu`,
+        },
+        {
+          preset: 'islands#blueHomeCircleIcon',
+        }
+      );
+      mapRef.current.geoObjects.add(projectPlacemark);
+
+      locations.forEach((place) => {
+        if (selectedCategory === 'all' || selectedCategory === place.category) {
+          const pin = new window.ymaps.Placemark(
+            place.coords,
+            {
+              balloonContent: `<strong>${place.name}</strong><br/>${place.description}`,
+            },
+            {
+              iconLayout: 'default#image',
+              iconImageHref: categoryIcons[place.category],
+              iconImageSize: [42, 42],
+              iconImageOffset: [-21, -21],
+            }
+          );
+          mapRef.current.geoObjects.add(pin);
+        }
       });
     };
 
@@ -238,6 +244,7 @@ export default function NearbyMap() {
         </div>
       </motion.div>
 
+      {/* Category Buttons */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -250,7 +257,7 @@ export default function NearbyMap() {
             <button
               key={cat.key}
               onClick={() => setSelectedCategory(cat.key)}
-              className={`flex items-center gap-2 px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ease-in-out ${
+              className={`flex items-center gap-2 px-5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 selectedCategory === cat.key
                   ? 'bg-black text-white'
                   : 'bg-white text-gray-800'
@@ -263,6 +270,7 @@ export default function NearbyMap() {
         </div>
       </motion.div>
 
+      {/* Map Container */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}

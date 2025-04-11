@@ -9,15 +9,6 @@ import Ai from '../components/ai'; // adjust path if needed
 
 
 
-
-
-import { Unbounded } from 'next/font/google';
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-}); 
-
 export default function CriterHakkindaPage() {
   return (
     <main className="min-h-screen">

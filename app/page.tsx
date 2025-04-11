@@ -9,12 +9,10 @@ import AmenitiesSection from "./components/Amenities";
 import Interior from "./components/Interior-Staff";
 import Contact from "./components/Contact";
 import Faq from "./components/Faq";
-import { Unbounded } from 'next/font/google'; 
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
+
+
+
+
 import "./globals.css";
 
 
