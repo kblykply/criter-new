@@ -1,3 +1,4 @@
+// NearbyMap.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -9,8 +10,9 @@ declare global {
     ymaps: any;
   }
 
-  // Extend global scope with Yandex map instance type
-  type YandexMap = any; // You can replace this with a custom type if you want better intellisense
+  type YandexMap = {
+    geoObjects: any;
+  };
 }
 
 type LocationCategory = 'education' | 'shopping' | 'hospital' | 'market';
@@ -22,6 +24,7 @@ type Location = {
   category: LocationCategory;
 };
 
+// Location list and icons
 const locations: Location[] = [
   {
     name: 'CADDE YUNUS AVM',
@@ -126,7 +129,6 @@ const locations: Location[] = [
     category: 'market',
   },
 ];
-
 const categoryIcons: Record<string, string> = {
   all: '/all-pin.png',
   education: '/scool.png',
@@ -137,7 +139,7 @@ const categoryIcons: Record<string, string> = {
 
 export default function NearbyMap() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const mapRef = useRef<YandexMap | null>(null);
+  const mapRef = useRef<null | YandexMap>(null);
 
   useEffect(() => {
     const loadMap = () => {
@@ -149,9 +151,7 @@ export default function NearbyMap() {
         script.src = 'https://api-maps.yandex.ru/2.1/?lang=tr_TR';
         script.type = 'text/javascript';
         script.onload = () => {
-          if (window.ymaps) {
-            window.ymaps.ready(initMap);
-          }
+          if (window.ymaps) window.ymaps.ready(initMap);
         };
         document.head.appendChild(script);
       } else {
@@ -159,39 +159,35 @@ export default function NearbyMap() {
           window.ymaps.ready(initMap);
         } else {
           existingScript.addEventListener('load', () => {
-            if (window.ymaps) {
-              window.ymaps.ready(initMap);
-            }
+            if (window.ymaps) window.ymaps.ready(initMap);
           });
         }
       }
     };
 
     const initMap = () => {
+      const ymaps = window.ymaps;
       if (!mapRef.current) {
-        mapRef.current = new window.ymaps.Map('map', {
+        mapRef.current = new ymaps.Map('map', {
           center: [39.875507, 32.596579],
           zoom: 12,
           controls: ['zoomControl'],
         });
       }
 
+      if (!mapRef.current) return;
       mapRef.current.geoObjects.removeAll();
 
-      const projectPlacemark = new window.ymaps.Placemark(
+      const projectPlacemark = new ymaps.Placemark(
         [39.875507, 32.596579],
-        {
-          balloonContent: `<strong>CRITER Bağlıca</strong><br/>Proje Konumu`,
-        },
-        {
-          preset: 'islands#blueHomeCircleIcon',
-        }
+        { balloonContent: '<strong>CRITER Bağlıca</strong><br/>Proje Konumu' },
+        { preset: 'islands#blueHomeCircleIcon' }
       );
       mapRef.current.geoObjects.add(projectPlacemark);
 
       locations.forEach((place) => {
         if (selectedCategory === 'all' || selectedCategory === place.category) {
-          const pin = new window.ymaps.Placemark(
+          const pin = new ymaps.Placemark(
             place.coords,
             {
               balloonContent: `<strong>${place.name}</strong><br/>${place.description}`,
@@ -203,7 +199,7 @@ export default function NearbyMap() {
               iconImageOffset: [-21, -21],
             }
           );
-          mapRef.current.geoObjects.add(pin);
+          mapRef.current?.geoObjects.add(pin);
         }
       });
     };
@@ -251,9 +247,7 @@ export default function NearbyMap() {
               key={cat.key}
               onClick={() => setSelectedCategory(cat.key)}
               className={`flex items-center gap-2 px-5 py-1.5 rounded-full text-sm font-medium transition ${
-                selectedCategory === cat.key
-                  ? 'bg-black text-white'
-                  : 'bg-white text-gray-800'
+                selectedCategory === cat.key ? 'bg-black text-white' : 'bg-white text-gray-800'
               }`}
             >
               <Image src={categoryIcons[cat.key]} alt={cat.label} width={30} height={30} />
