@@ -19,6 +19,7 @@ type Location = {
   category: LocationCategory;
 };
 
+
 const locations: Location[] = [
   {
     name: 'CADDE YUNUS AVM',
@@ -123,7 +124,6 @@ const locations: Location[] = [
     category: 'market',
   },
 ];
-
 const categoryIcons: Record<string, string> = {
   all: '/all-pin.png',
   education: '/scool.png',
