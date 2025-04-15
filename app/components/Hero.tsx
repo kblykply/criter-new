@@ -10,6 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import type { Swiper as SwiperType } from 'swiper/types';
 import type { NavigationOptions } from 'swiper/types';
+import Link from 'next/link';
 
 export default function Hero() {
   const slides = [
@@ -111,9 +112,11 @@ export default function Hero() {
               <button className="bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-200 transition">
                 Broşür İndir
               </button>
-              <button className="bg-white/20 text-white px-4 py-2 rounded-full font-medium hover:bg-white/30 transition">
-                Randevu Al
-              </button>
+              <Link href="https://api.whatsapp.com/send?phone=+905376694607&text=Merhaba,%20projeniz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." passHref>
+  <button className="bg-white/20 text-white px-4 py-2 rounded-full font-medium hover:bg-white/30 transition">
+    Randevu Al
+  </button>
+</Link>
             </div>
           </motion.div>
         </AnimatePresence>

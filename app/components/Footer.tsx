@@ -19,10 +19,10 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-semibold mb-4">Hızlı Erişim</h4>
           <ul className="space-y-3 text-sm text-gray-300">
-            <li><Link href="#about" className="hover:text-white transition">Hakkımızda</Link></li>
-            <li><Link href="#projects" className="hover:text-white transition">Projeler</Link></li>
-            <li><Link href="#payment" className="hover:text-white transition">Ödeme Planları</Link></li>
-            <li><Link href="#contact" className="hover:text-white transition">İletişim</Link></li>
+            <li><Link href="/" className="hover:text-white transition">Ana Sayfa</Link></li>
+            <li><Link href="/about" className="hover:text-white transition">Hakkımızda</Link></li>
+            <li><Link href="/invest" className="hover:text-white transition">Yatırımcıya  Özel</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition">İletişim</Link></li>
           </ul>
         </div>
 
@@ -36,11 +36,11 @@ export default function Footer() {
             </li>
             <li className="flex items-start gap-3">
               <Image src="/phone.png" alt="Telefon" width={20} height={20} />
-              <span>0 (312) 000 00 00</span>
+              <span>0 (312) 851 50 50 </span>
             </li>
             <li className="flex items-start gap-3">
               <Image src="/mail.png" alt="Email" width={20} height={20} />
-              <span>info@criterbaglica.com</span>
+              <span>info@criterrezidans.com</span>
             </li>
           </ul>
         </div>
@@ -49,16 +49,16 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-semibold mb-4">Bizi Takip Edin</h4>
           <div className="flex gap-4">
-            <Link href="#" aria-label="Instagram">
+            <Link href="https://www.instagram.com/criterrezidans/" aria-label="Instagram">
               <Image src="/instagram-icon.png" alt="Instagram" width={24} height={24} />
             </Link>
-            <Link href="#" aria-label="Facebook">
+            <Link href="https://www.facebook.com/p/Criter-rezidans-61558660899690/" aria-label="Facebook">
               <Image src="/facebook.png" alt="Facebook" width={24} height={24} />
             </Link>
-            <Link href="#" aria-label="YouTube">
+            <Link href="https://www.youtube.com/@criterrezidans/featured" aria-label="YouTube">
               <Image src="/youtube.png" alt="YouTube" width={24} height={24} />
             </Link>
-            <Link href="#" aria-label="WhatsApp">
+            <Link href="https://api.whatsapp.com/send?phone=+905376694607&text=Merhaba,%20projeniz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." aria-label="WhatsApp">
               <Image src="/whatsapp-icon.png" alt="WhatsApp" width={24} height={24} />
             </Link>
           </div>

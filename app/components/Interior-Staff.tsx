@@ -29,20 +29,8 @@ const images: InteriorImage[] = [
     name: 'Odalar',
     src: '/14.png',
     hotspots: [
-      {
-        id: 1,
-        x: '30%',
-        y: '40%',
-        title: 'Duvar',
-        description: 'Kum beyazı ısı ve ses yalıtımlı duvarlar.',
-      },
-      {
-        id: 2,
-        x: '85%',
-        y: '37%',
-        title: 'Pencereler',
-        description: 'Siyah Aliminyum ısı yalıtımlı pencereler.',
-      },
+      { id: 1, x: '30%', y: '40%', title: 'Duvar', description: 'Kum beyazı ısı ve ses yalıtımlı duvarlar.' },
+      { id: 2, x: '85%', y: '37%', title: 'Pencereler', description: 'Siyah Aliminyum ısı yalıtımlı pencereler.' },
     ],
     facilities: [
       { icon: '/heating.png', label: 'Merkezi Isıtma' },
@@ -54,20 +42,8 @@ const images: InteriorImage[] = [
     name: 'Banyo',
     src: '/banyogörsel.jpg',
     hotspots: [
-      {
-        id: 3,
-        x: '50%',
-        y: '85%',
-        title: 'Zemin',
-        description: 'Adriana mokka seramik.',
-      },
-      {
-        id: 4,
-        x: '65%',
-        y: '30%',
-        title: 'Duvar',
-        description: 'Adriana latte seramik duvar kaplaması.',
-      },
+      { id: 3, x: '50%', y: '85%', title: 'Zemin', description: 'Adriana mokka seramik.' },
+      { id: 4, x: '65%', y: '30%', title: 'Duvar', description: 'Adriana latte seramik duvar kaplaması.' },
     ],
     facilities: [
       { icon: '/heating.png', label: 'Merkezi Isıtma' },
@@ -109,13 +85,23 @@ export default function InteriorHotspotsSection() {
                 setActiveHotspot(null);
               }}
               className={`px-5 py-2 rounded-full border text-sm font-medium transition ${
-                selectedImageIndex === i
-                  ? 'bg-black text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                selectedImageIndex === i ? 'bg-black text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               {img.name}
             </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile Facilities */}
+      <div className="block md:hidden max-w-6xl mx-auto mb-6">
+        <div className="flex flex-wrap justify-center gap-3 bg-white/90 p-3 rounded-xl backdrop-blur-md shadow-md">
+          {current.facilities.map((fac, idx) => (
+            <div key={idx} className="flex items-center gap-2 text-xs font-medium text-gray-800">
+              <Image src={fac.icon} alt={fac.label} width={18} height={18} />
+              {fac.label}
+            </div>
           ))}
         </div>
       </div>
@@ -137,7 +123,7 @@ export default function InteriorHotspotsSection() {
           const xPercent = parseFloat(spot.x);
           const yPercent = parseFloat(spot.y);
 
-          // Determine optimal tooltip position
+          // Determine tooltip position
           let tooltipPosition = 'top-full mt-2';
           if (yPercent > 80) tooltipPosition = 'bottom-full mb-2';
           if (xPercent > 70) tooltipPosition += ' right-0';
@@ -148,11 +134,7 @@ export default function InteriorHotspotsSection() {
             <div
               key={spot.id}
               className="absolute z-20"
-              style={{
-                top: spot.y,
-                left: spot.x,
-                transform: 'translate(-50%, -50%)',
-              }}
+              style={{ top: spot.y, left: spot.x, transform: 'translate(-50%, -50%)' }}
               onClick={(e) => {
                 e.stopPropagation();
                 setActiveHotspot(isActive ? null : spot.id);
@@ -167,7 +149,7 @@ export default function InteriorHotspotsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.3 }}
-                    className={`absolute z-30 w-56 bg-white text-gray-800 text-sm rounded-xl shadow-xl p-3 ${tooltipPosition}`}
+                    className={`absolute z-30 w-56 bg-white text-gray-800 text-sm rounded-xl shadow-xl p-3 ${tooltipPosition} hidden md:block`}
                   >
                     <h4 className="font-semibold text-base mb-1">{spot.title}</h4>
                     <p className="text-xs leading-snug">{spot.description}</p>
@@ -178,8 +160,8 @@ export default function InteriorHotspotsSection() {
           );
         })}
 
-        {/* Facilities */}
-        <div className="absolute bottom-4 left-4 z-30 flex flex-wrap gap-3 bg-white/70 p-3 rounded-xl backdrop-blur-md shadow-md">
+        {/* Desktop Facilities */}
+        <div className="absolute bottom-4 left-4 z-30 hidden md:flex flex-wrap gap-3 bg-white/70 p-3 rounded-xl backdrop-blur-md shadow-md">
           {current.facilities.map((fac, idx) => (
             <div key={idx} className="flex items-center gap-2 text-xs font-medium text-gray-800">
               <Image src={fac.icon} alt={fac.label} width={18} height={18} />
@@ -187,6 +169,24 @@ export default function InteriorHotspotsSection() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Tooltip shown below image for mobile */}
+      <div className="md:hidden mt-6 max-w-6xl mx-auto">
+        {current.hotspots.map((spot) => {
+          if (activeHotspot === spot.id) {
+            return (
+              <div
+                key={spot.id}
+                className="bg-white border border-gray-200 text-gray-800 text-sm rounded-xl shadow-xl p-4 w-full"
+              >
+                <h4 className="font-semibold text-base mb-1">{spot.title}</h4>
+                <p className="text-xs leading-snug">{spot.description}</p>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
     </section>
   );

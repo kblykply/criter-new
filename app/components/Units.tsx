@@ -10,7 +10,7 @@ import 'swiper/css';
 const plans = [
   {
     type: '1+1 Daire',
-    image: '/11dagire.png',
+    image: '/1+1BaglicaKat.png',
     totalArea: '50.00 m²',
     netArea: '44 m²',
     rooms: [
@@ -24,7 +24,7 @@ const plans = [
   },
   {
     type: '2+1 Amerikan Mutfak',
-    image: '/21bagimli.png',
+    image: '/2+1BagimliKat.png',
     totalArea: '79.10 m²',
     netArea: '71 m²',
     rooms: [
@@ -40,7 +40,7 @@ const plans = [
   },
   {
     type: '2+1 Daire',
-    image: '/21bagimsiz.png',
+    image: '/2+1BagimsizKat.png',
     totalArea: '92.00 m²',
     netArea: '81 m²',
     rooms: [

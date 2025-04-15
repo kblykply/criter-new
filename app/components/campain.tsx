@@ -4,16 +4,16 @@ import { motion } from 'framer-motion';
 
 const offers = [
   {
-    title: 'Peşin Ödemeye %15 İndirim',
+    title: 'Peşin Ödemeye %20 İndirim',
     description: 'Tüm daire tiplerinde geçerli. Kampanya sınırlı süre için geçerlidir.',
   },
   {
-    title: '12 Ay Vade Farksız Taksit',
-    description: 'Vade farkı olmadan, eşit taksitlerle ödeme fırsatı.',
+    title: '32 Aya Varan Taksit İmkanı',
+    description: '32 Aya Varan Bütçe Dostu Ödeme İmkanı.',
   },
   {
-    title: 'Kira Garantili Yatırım',
-    description: 'İlk 12 ay boyunca garantili kira getirisi sunulmaktadır.',
+    title: 'Kolaylık Sağlayan Ödeme İmkanları',
+    description: 'Kampanya süresince geçerli olan özel ödeme planları.',
   },
 ];
 

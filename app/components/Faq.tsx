@@ -7,7 +7,7 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
   { q: 'CRITER Bağlıca projesi nedir?', a: 'CRITER Bağlıca, Ankara’nın Bağlıca bölgesinde konumlanan modern bir konut projesidir.' },
-  { q: 'Proje teslim tarihi nedir?', a: 'Projenin teslim tarihi Aralık 2025 olarak planlanmıştır.' },
+  { q: 'Proje teslim tarihi nedir?', a: 'Projenin teslim tarihi Haziran 2028 olarak planlanmıştır.' },
   { q: 'Satış ofisine gelmeden bilgi alabilir miyim?', a: 'Evet, online sunumlarımız ve dijital tur sistemimiz sayesinde tüm bilgileri uzaktan edinebilirsiniz.' },
   { q: 'Daire tipleri ve m² aralıkları nelerdir?', a: 'Projede 2+1, 3+1 ve 4+1 daire seçenekleri mevcuttur. Alanlar 100 m² ile 190 m² arasında değişmektedir.' },
   { q: 'Ödeme planları nasıl?', a: 'Peşin, taksitli ve karma ödeme planları sunulmaktadır. Size uygun planı seçebilirsiniz.' },

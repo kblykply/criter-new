@@ -30,10 +30,11 @@ export default function RootLayout({
     <html lang="tr">
       <body className={unbounded.className}>
       <Navbar />
+      <ChatBot />
+
 
         {children}
         <Footer />
-        <ChatBot />
 
       </body>
     </html>

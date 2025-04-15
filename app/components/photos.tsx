@@ -184,7 +184,7 @@ export default function ProjectGallerySection() {
           >
             <div className="relative w-full max-w-4xl aspect-video">
               <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="https://www.youtube.com/embed/yHbwGdXeq0k?si=ybnbDkRM4oOUUyrr"
                 title="Proje Videosu"
                 className="w-full h-full rounded-xl"
                 allowFullScreen

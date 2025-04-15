@@ -75,31 +75,36 @@ export default function Navbar() {
 
             {/* Notification Dropdown */}
             {showNotification && (
-              <div className="absolute right-0 mt-3 w-80 bg-white border border-gray-200 shadow-xl rounded-xl z-50 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                  <span className="text-sm font-semibold text-gray-800">Bildirimler</span>
-                  <button
-                    onClick={() => setShowNotification(false)}
-                    className="text-gray-400 hover:text-gray-600"
-                    title="Kapat"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-                <ul className="max-h-60 overflow-y-auto divide-y divide-gray-100">
-                  {notifications.map((notif, i) => (
-                    <li key={i} className="px-4 py-3 hover:bg-gray-50 transition">
-                      <p className="text-sm font-medium text-gray-800">{notif.title}</p>
-                      <p className="text-sm text-gray-500">{notif.message}</p>
-                      <span className="text-xs text-gray-400">{notif.time}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="text-center py-2 bg-gray-50">
-                  <Link href="#" className="text-xs text-blue-600 hover:underline">Tümünü Gör</Link>
-                </div>
-              </div>
-            )}
+  <div
+    className={`${
+      // Full width fixed for mobile, dropdown style for desktop
+      'sm:absolute sm:right-0 sm:mt-3 sm:w-80 fixed top-[%25] left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:translate-x-0 sm:left-auto z-50'
+    } bg-white border border-gray-200 shadow-xl rounded-none sm:rounded-xl overflow-hidden`}
+  >
+    <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+      <span className="text-sm font-semibold text-gray-800">Bildirimler</span>
+      <button
+        onClick={() => setShowNotification(false)}
+        className="text-gray-400 hover:text-gray-600"
+        title="Kapat"
+      >
+        <X size={16} />
+      </button>
+    </div>
+    <ul className="max-h-60 overflow-y-auto divide-y divide-gray-100">
+      {notifications.map((notif, i) => (
+        <li key={i} className="px-4 py-3 hover:bg-gray-50 transition">
+          <p className="text-sm font-medium text-gray-800">{notif.title}</p>
+          <p className="text-sm text-gray-500">{notif.message}</p>
+          <span className="text-xs text-gray-400">{notif.time}</span>
+        </li>
+      ))}
+    </ul>
+    <div className="text-center py-2 bg-gray-50">
+      <Link href="#" className="text-xs text-blue-600 hover:underline">Tümünü Gör</Link>
+    </div>
+  </div>
+)}
           </div>
 
           {/* Mobile Menu Button */}
@@ -125,8 +130,8 @@ export default function Navbar() {
           >
             <Link href="/" className="block text-gray-700 hover:text-blue-600">Anasayfa</Link>
             <Link href="/about" className="block text-gray-700 hover:text-blue-600">Proje Hakkında</Link>
-            <Link href="#" className="block text-gray-700 hover:text-blue-600">Yatırımcıya Özel</Link>
-            <Link href="#" className="block text-gray-700 hover:text-blue-600">İletişim</Link>
+            <Link href="/invest" className="block text-gray-700 hover:text-blue-600">Yatırımcıya Özel</Link>
+            <Link href="/contact" className="block text-gray-700 hover:text-blue-600">İletişim</Link>
             <hr className="border-gray-200" />
             <button className="w-full text-left px-3 py-2 bg-gray-100 rounded-md text-gray-800">
               Giriş Yap

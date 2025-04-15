@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function AboutHeroSection() {
   return (
@@ -32,12 +33,20 @@ export default function AboutHeroSection() {
           CRITER olarak yılların tecrübesiyle modern yapılar, sürdürülebilir çözümler ve güven odaklı projeler geliştiriyoruz.
         </p>
         <div className="flex justify-center md:justify-start gap-3">
+        <Link href="/contact" passHref>
           <button className="px-5 py-2.5 rounded-full bg-black text-white text-sm font-medium hover:bg-gray-800 transition">
             Projelerimize Göz Atın
           </button>
+          </Link>
+
+          <Link href="https://api.whatsapp.com/send?phone=+905376694607&text=Merhaba,%20projeniz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." passHref>
+
           <button className="px-5 text-gray-700 py-2.5 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition">
             Bize Ulaşın
           </button>
+
+          </Link>
+
         </div>
       </motion.div>
     </section>
